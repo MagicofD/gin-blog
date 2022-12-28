@@ -40,7 +40,15 @@ func GetTags(c *gin.Context) {
 	})
 }
 
-// AddTag 新增文章标签
+// @BasePath /api/v1
+
+// gin-blog godoc
+// @Summary 新增文章标签
+// @Schemes
+// @Description 新增文章标签
+// @Produce json
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Router /api/v1/tags [post]
 func AddTag(c *gin.Context) {
 	name := c.Query("name")
 	state := com.StrTo(c.DefaultQuery("state", "0")).MustInt()
@@ -70,7 +78,12 @@ func AddTag(c *gin.Context) {
 	})
 }
 
-// EditTag 修改文章标签
+// @Summary 修改文章标签
+// @Schemes
+// @Description 修改文章标签
+// @Produce json
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Router /api/v1/tags/{id} [post]
 func EditTag(c *gin.Context) {
 	id := com.StrTo(c.Param("id")).MustInt()
 	name := c.Query("name")

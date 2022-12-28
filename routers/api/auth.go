@@ -31,16 +31,18 @@ func GetAuth(c *gin.Context) {
 			token, err := util.GenerateToken(username, password)
 			if err != nil {
 				code = e.ERROR_AUTH_TOKEN
+				logging.Info(code, e.GetMsg(code))
 			} else {
 				data["token"] = token
 				code = e.SUCCESS
 			}
 		} else {
 			code = e.ERROR_AUTH
+			logging.Info(code, e.GetMsg(code))
 		}
 	} else {
 		for _, err := range valid.Errors {
-			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 

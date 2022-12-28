@@ -1,0 +1,26 @@
+info:
+  contact: {}
+paths:
+  /api/v1/tags:
+    post:
+      description: 新增文章标签
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 新增文章标签
+  /api/v1/tags/{id}:
+    post:
+      description: 修改文章标签
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 修改文章标签
+swagger: "2.0"

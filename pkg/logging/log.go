@@ -33,7 +33,6 @@ func init() {
 	filePath := getLogFileFullPath()
 	F = openLogFile(filePath)
 	logger = log.New(F, DefaultPrefix, log.LstdFlags)
-	log.Printf("DefaultPrefix： %v", F.Name())
 }
 
 func setPrefix(level Level) {

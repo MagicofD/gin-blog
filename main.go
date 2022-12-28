@@ -1,10 +1,16 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"log"
+	"net/http"
+	"os"
+	"os/signal"
+	"time"
+
 	"github.com/EDDYCJY/go-gin-example/pkg/setting"
 	"github.com/EDDYCJY/go-gin-example/routers"
-	"net/http"
 )
 
 func main() {
@@ -18,8 +24,24 @@ func main() {
 		MaxHeaderBytes: 1 << 20,
 	}
 
-	err := s.ListenAndServe()
-	if err != nil {
-		return
+	go func() {
+		if err := s.ListenAndServe(); err != nil {
+			log.Printf("Listen: %s\n", err)
+		}
+	}()
+
+	quit := make(chan os.Signal)
+	signal.Notify(quit, os.Interrupt)
+	<-quit
+
+	log.Println("Shutdown Server ...")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if err := s.Shutdown(ctx); err != nil {
+		log.Fatal("Server Shutdown: ", err)
 	}
+
+	log.Printf("Server Exiting")
+
 }

@@ -1,9 +1,11 @@
 package util
 
 import (
-	"github.com/EDDYCJY/go-gin-example/pkg/setting"
-	"github.com/dgrijalva/jwt-go"
 	"time"
+
+	jwt "github.com/dgrijalva/jwt-go"
+
+	"github.com/EDDYCJY/go-gin-example/pkg/setting"
 )
 
 var jwtSecret = []byte(setting.JwtSecret)
@@ -16,7 +18,7 @@ type Claims struct {
 
 func GenerateToken(username, password string) (string, error) {
 	nowTime := time.Now()
-	expireTime := nowTime.Add(3 & time.Hour)
+	expireTime := nowTime.Add(3 * time.Hour)
 
 	claims := Claims{
 		username,
@@ -27,8 +29,8 @@ func GenerateToken(username, password string) (string, error) {
 		},
 	}
 
-	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodES256, claims)
-	token, err := tokenClaims.SigningString()
+	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	token, err := tokenClaims.SignedString(jwtSecret)
 
 	return token, err
 }

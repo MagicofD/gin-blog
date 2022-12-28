@@ -2,6 +2,7 @@ package jwt
 
 import (
 	"github.com/EDDYCJY/go-gin-example/pkg/e"
+	"github.com/EDDYCJY/go-gin-example/pkg/logging"
 	"github.com/EDDYCJY/go-gin-example/pkg/util"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -27,6 +28,7 @@ func JWT() gin.HandlerFunc {
 		}
 
 		if code != e.SUCCESS {
+			logging.Info(code, e.GetMsg(code))
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"code": code,
 				"msg":  e.GetMsg(code),
